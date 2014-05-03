@@ -1,12 +1,15 @@
-from base_api.base import baseCmd,baseResponse
+from base_api.listFilesCmd import *
 
-class listFilesCmd(baseCmd):
-    def __init__(self,req):
-        self.cmd_name = "listFilesCmd"
-   
-    def execute(self):
-        self.parseInp(req,          
 
-class listFilesCmdResponse(baseResponse):
-    def __init__(self):
-        pass
+def list_files_run_cmd(request):
+    
+    cmd_req =listFilesCmdReq(request)
+    cmd_resp = listFilesCmdResponse()
+    try:
+        if cmd_req.parse() == FAILED:
+            return "FAILED"
+        resp = cmd_req.execute()
+        cmd_resp.setResponse(resp)
+        return cmd_resp 
+    except Exception,e:
+        return "ErrorCodeResponse" 

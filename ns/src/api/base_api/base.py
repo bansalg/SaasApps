@@ -1,19 +1,25 @@
+'''
+'''
+
 from ns.lib.NsApiCodes import ApiConst,HttpMethod,ErrorCodes
+from time import strftime,asctime
 
 class BaseCmd:
     def __init__(self):
         self.cmd_name = None
-        self.is_async = false
+        self.is_async = False
         self.response=None
         self.response_type=ApiConst.JSON_RESPONSE
         self.http_method=None
         self.custom_params={}
 
-    def isValidCmd(self):
-        pass
+    def isValidCmd(self,args):
+        return True
     
-    def parseInp(self,inp_args,cmd_name):
-        pass       
+    def parseInp(self,inp_args):
+        if self.isValidCmd(inp_args):
+            self.setStartDate() 
+            return True       
    
     def execute(self):
         pass
@@ -46,8 +52,8 @@ class BaseCmd:
     def setResponseObject(self,response_obj):
         self.response = response_obj
 
-    def setStartDate(self,date_inp):
-        self.start_date = date_inp
+    def setStartDate(self):
+        self.start_date = strftime(asctime())
 
     def setEndDate(self,date_inp):
         self.start_date = date_inp
@@ -108,4 +114,4 @@ class BaseResponse:
        self.custom_params=params 
 
     def getCustomParams(self):
-        return self.custom_params
+       return self.custom_params
